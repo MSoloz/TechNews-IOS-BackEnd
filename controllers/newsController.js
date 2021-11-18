@@ -1,5 +1,6 @@
 const news = require('../models/newsSchema')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const user = require('../models/user');
 
 
 
@@ -64,11 +65,26 @@ const getnewsByName = (req,res)=>{
 
 }
 
+const getNews = async(req,res)=>{
 
+
+
+  try {
+
+   a = await news.find();
+
+    res.status(200).send(a);
+    
+  } catch (error) {
+    console.log(error)
+  }
+
+  
+}
 
 
 module.exports = {
 
-addnews,getnewsByName
+addnews,getnewsByName,getNews
 
 }

@@ -7,30 +7,31 @@ const newsController = require('../controllers/newsController');
 
 const upload = require('../middleware/storage');
 
-const news = require('../models/newsSchema')
+const event = require('../models/event')
 
 const multer = require('multer')
 
 
 
-router.post('/addnews',upload.single('image'),async(req,res)=>{
+router.post('/addevent',upload.single('image'),async(req,res)=>{
 
     console.log(req.file);
 
     console.log(req.body);
 
 
-    var news1 = new news({
+    var event1 = new event({
  
-         title : req.body.title,
-         desc: req.body.desc,
+         name : req.body.name,
+         event_time: req.body.event_time,
+         location : req.body.location,
          image : req.file.filename
         
     });
 
  try {
 
-   await  news1.save();
+   await  event1.save();
 
   res.status(201).json({message :"true"});
 
@@ -39,14 +40,10 @@ router.post('/addnews',upload.single('image'),async(req,res)=>{
 
     console.log(error)
      
-
-
-    
  }
 
 });
 
-router.get('/news',newsController.getNews);
+router.get('/events',newsController.getNews);
 
 module.exports = router;
-

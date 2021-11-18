@@ -63,7 +63,32 @@ const Login = (req,res)=>{
 
   })
 
+}
+
+
+
+const DeleteUser = async(req,res)=>{
+
+
+  const query = {
+
+      email :  req.body.email,
+     password : req.body.password
   
+  }
+
+  try {
+  
+  a = await   user.findOne(query)
+
+   await  user.remove(a);
+
+  }
+  catch{
+
+  console.log(error);
+
+  }
 
 
 
@@ -73,6 +98,6 @@ const Login = (req,res)=>{
 
 module.exports = {
 
-    SignUp,Login
+    SignUp,Login,DeleteUser
 
 }

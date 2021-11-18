@@ -14,13 +14,6 @@ title :{
 
 },
 
-mydate:{
-
-    type : String,
-
-    required : true
-},
-
 desc :{
 
     type : String,
