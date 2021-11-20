@@ -7,7 +7,7 @@ const newsController = require('../controllers/newsController');
 
 const upload = require('../middleware/storage');
 
-const news = require('../models/newsSchema')
+const news = require('../models/news')
 
 const multer = require('multer')
 
@@ -47,6 +47,43 @@ router.post('/addnews',upload.single('image'),async(req,res)=>{
 });
 
 router.get('/news',newsController.getNews);
+
+
+router.delete('/removeNews/:id',newsController.deleteNews)
+
+
+
+router.put('/updateNews/:id',upload.single('image'),async(req,res)=>{
+
+     
+   const news1 = new news({
+
+    _id : req.params.id,
+
+     title : req.body.title,
+
+      desc : req.body.desc,
+
+      image : req.file.filename
+   });
+
+
+
+  try {
+     
+   await news.updateOne({_id:req.params.id},news1);
+
+   res.status(200).json({ message :"updated succesfuly"});
+
+  } catch (error) {
+     
+          console.log(error);
+
+  }
+
+
+})
+
 
 module.exports = router;
 

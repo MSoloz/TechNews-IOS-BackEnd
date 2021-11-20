@@ -1,6 +1,7 @@
+const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose');
+const user = require('../models/user');
 
-const mongoose = require('mongoose')
-const user = require('../models/user')
 
 
 const SignUp = async(req,res)=>{
@@ -70,34 +71,51 @@ const Login = (req,res)=>{
 const DeleteUser = async(req,res)=>{
 
 
-  const query = {
-
-      email :  req.body.email,
-     password : req.body.password
-  
-  }
-
   try {
-  
-  a = await   user.findOne(query)
 
-   await  user.remove(a);
-
+   await  user.deleteOne({_id:req.params.id});
+     
+   res.status(200).json({message : "Deleted !"});
   }
   catch{
 
   console.log(error);
 
+  res.status(400);
+
   }
-
-
 
 }
 
+const UpdateUser = async(req,res)=>{
 
+  const user1 = new user({
+
+
+    _id: req.params.id,
+     name : req.body.name,
+    email : req.body.email,
+    password : req.body.password
+
+  });
+
+  try{
+
+   await user.updateOne({_id:req.params.id},user1);
+
+       res.status(201).json({ message :"updated successufuly"});
+
+  }catch(error){
+
+
+    console.log(error);
+  
+  }
+
+}
 
 module.exports = {
 
-    SignUp,Login,DeleteUser
+    SignUp,Login,DeleteUser,UpdateUser
 
 }

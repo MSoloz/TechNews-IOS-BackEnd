@@ -3,7 +3,7 @@ const express = require('express')
 
 const router = express.Router();
 
-const newsController = require('../controllers/newsController');
+const eventController = require('../controllers/eventController');
 
 const upload = require('../middleware/storage');
 
@@ -44,6 +44,13 @@ router.post('/addevent',upload.single('image'),async(req,res)=>{
 
 });
 
-router.get('/events',newsController.getNews);
+router.get('/events',eventController.getEvents);
+
+
+router.delete('/removeEvent/:id',eventController.deleteEvent)
+
+
+router.put('/updateEvent/:id',upload.single('image'),eventController.updateEvent)
+
 
 module.exports = router;

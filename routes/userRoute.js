@@ -12,7 +12,9 @@ router.post('/login',userController.Login);
 
 router.post('/register',userController.SignUp);
 
-router.delete('/removeUser',userController.DeleteUser)
+router.put('/updateUser/:id',userController.UpdateUser)
+
+router.delete('/removeUser/:id',userController.DeleteUser)
 
 
 module.exports = router

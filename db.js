@@ -6,7 +6,7 @@ var express = require('express')
 
 
 
-mongoose.connect("mongodb://localhost/TechNewsAppDB8",{
+mongoose.connect("mongodb://localhost/TechNewsAppDB1",{
 
     useNewUrlParser: true,
     useUnifiedTopology: true,

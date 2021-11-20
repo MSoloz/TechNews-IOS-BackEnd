@@ -1,4 +1,4 @@
-const news = require('../models/newsSchema')
+const news = require('../models/news')
 const mongoose = require('mongoose');
 const user = require('../models/user');
 
@@ -14,7 +14,6 @@ const addnews = async(req,res)=>{
     const news1 = new news({
  
          title : req.body.name,
-         date : req.body.time,
          desc: req.body.desc,
          img : req.file.filename,
         
@@ -82,9 +81,30 @@ const getNews = async(req,res)=>{
   
 }
 
+const deleteNews = async(req,res)=>{
+
+
+  try {
+
+    await  news.deleteOne({_id:req.params.id});
+      
+    res.status(200).json({message : "Deleted !"});
+   }
+   catch{
+ 
+   console.log(error);
+ 
+   res.status(400);
+ 
+   }
+ 
+
+
+}
+
 
 module.exports = {
 
-addnews,getnewsByName,getNews
+addnews,getnewsByName,getNews,deleteNews
 
 }
