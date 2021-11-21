@@ -1,4 +1,8 @@
-const jwt = require('jsonwebtoken')
+
+const jwt = require('jsonwebtoken');
+
+const config = require('../config');
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const user = require('../models/user');
 
@@ -6,22 +10,27 @@ const user = require('../models/user');
 
 const SignUp = async(req,res)=>{
 
+
+ var hashedPassword = bcrypt.hashSync(req.body.password,8)
+
  var  newUser = new user({
 
     name : req.body.name,
     email : req.body.email,
-    password : req.body.password
+    password : hashedPassword
 
   } );
 
   try {
 
+
+    var token = jwt.sign({id:user._id},config.secret,{expiresIn :864000});
           
 
 
        await newUser.save();
 
-       res.status(201).send();
+       res.status(201).send({auth:true,token:token});
 
     
   } catch (error) {
@@ -42,6 +51,9 @@ const Login = (req,res)=>{
   
   }
 
+  
+
+  
   user.findOne(query)
   .then(user =>{
   
@@ -65,6 +77,8 @@ const Login = (req,res)=>{
   })
 
 }
+
+
 
 
 
@@ -114,8 +128,32 @@ const UpdateUser = async(req,res)=>{
 
 }
 
+const getUsers = async(req,res)=>{
+
+
+
+  try {
+
+
+    a = await user.find();
+ 
+     res.status(200).send(a);
+     
+   } catch (error) {
+     console.log(error)
+   }
+
+
+
+
+
+}
+
+
+
+
 module.exports = {
 
-    SignUp,Login,DeleteUser,UpdateUser
+    SignUp,Login,DeleteUser,UpdateUser,getUsers
 
 }

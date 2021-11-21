@@ -67,14 +67,14 @@ const getnewsByName = (req,res)=>{
 const getNews = async(req,res)=>{
 
 
-
   try {
-
-   a = await news.find();
+  
+  
+  a = await news.find();
 
     res.status(200).send(a);
-    
-  } catch (error) {
+  
+} catch (error) {
     console.log(error)
   }
 
