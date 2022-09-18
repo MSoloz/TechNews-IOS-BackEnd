@@ -1,41 +1,60 @@
 const mongoose = require('mongoose')
 
+const commentSchema = mongoose.Schema({
+    
+    user: {        
+        type: mongoose.Schema.Types.ObjectId, required: false, ref: "user"
+    },
+    comment: {
 
+        type: String,
+    }
+ 
+});
+
+const likeSchema = mongoose.Schema({
+    
+    user: {        
+        type: mongoose.Schema.Types.ObjectId, required: false, ref: "user"
+    }
+    
+});
 
 const newsSchema = new mongoose.Schema({
 
+    title: {
 
+        type: String,
 
-title :{
+        required: true
+    },
 
-    type : String,
-    
-    required : true
+    desc: {
 
-},
+        type: String,
+    },
 
-desc :{
+    image: {
 
-    type : String,
-    
-    required : true
+        type: String,
 
-   
+        required: true
 
-},
+    },comments: {
 
-image : {
+        type: [commentSchema],
+        required: false
 
-    type : String,
+    },likes: {
 
-    required : true
+        type: [likeSchema],
+        required: false
+    },
+    creator: {
 
-
-}
-
+        type: mongoose.Schema.Types.ObjectId, required: false, ref: "user"
+    },
 
 });
 
-
-
-module.exports = mongoose.model('news',newsSchema);
+module.exports = {news:mongoose.model('news', newsSchema),comment:mongoose.model('comment', commentSchema),like:mongoose.model('like', likeSchema)};

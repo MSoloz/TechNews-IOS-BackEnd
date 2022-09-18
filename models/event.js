@@ -1,42 +1,77 @@
 const mongoose = require('mongoose')
 
+const ParticipationSchema = mongoose.Schema({
+    
+    user: {        
+        type: mongoose.Schema.Types.ObjectId, required: false, ref: "user"
+    }
+    
+});
+
+const InterestSchema = mongoose.Schema({
+    
+    user: {        
+        type: mongoose.Schema.Types.ObjectId, required: false, ref: "user"
+    }
+    
+});
+
 
 const eventSchema = mongoose.Schema({
 
-name : {
- 
-    type : String,
+    name: {
 
-    required : true
+        type: String,
 
-},  
+    },
 
-event_time :{
+    event_time: {
 
-    type : String ,
+        type: String,
+    },
+    description: {
 
-    required : true
+        type: String,
+    },
 
+    location: {
 
-},
+        type: String,
+    },
 
-location :{
+    image: {
 
-    type : String,
+        type: String,
+    },
 
-    required : true
+    creator: {
 
-},
+        type: mongoose.Schema.Types.ObjectId, required: false, ref: "user"
+    },
 
-image : {
+    adress: {
 
-type : String,
+        type: String,
+    },
+    lat: {
 
-required : true
+        type: String,
+    },
+    lng: {
 
-}
+        type: String,
 
+    },participants: {
 
+        type: [ParticipationSchema],
+        required: false
+
+    },Interests: {
+
+        type: [InterestSchema],
+        required: false
+
+    }
 });
 
-module.exports = mongoose.model('event',eventSchema)
+module.exports = {event:mongoose.model('event', eventSchema),participation:mongoose.model('participation', ParticipationSchema),interest:mongoose.model('interest', InterestSchema)}

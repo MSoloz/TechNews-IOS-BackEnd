@@ -2,55 +2,30 @@ const express = require('express')
 
 
 const router = express.Router();
-
 const eventController = require('../controllers/eventController');
-
-const upload = require('../middleware/storage');
-
 const event = require('../models/event')
 
-const multer = require('multer')
+router.post('/addevent',eventController.addEvent);
 
-
-
-router.post('/addevent',upload.single('image'),async(req,res)=>{
-
-    console.log(req.file);
-
-    console.log(req.body);
-
-
-    var event1 = new event({
- 
-         name : req.body.name,
-         event_time: req.body.event_time,
-         location : req.body.location,
-         image : req.file.filename
-        
-    });
-
- try {
-
-   await  event1.save();
-
-  res.status(201).json({message :"true"});
-
-     
- } catch (error) {
-
-    console.log(error)
-     
- }
-
-});
-
+ /**
+  * @swagger
+ * /events:
+ *   description: The events managing API
+ *   get:
+ *     summary: Returns the list of all the events
+ *     tags: [Events]
+*     responses:
+ *       200:
+ *         description: The list events
+ *         content:
+ *           application/json:
+ *       404:
+ *         description: news error
+ */
 router.get('/events',eventController.getEvents);
-
-
-router.delete('/removeEvent/:id',eventController.deleteEvent)
-
-
-router.put('/updateEvent/:id',upload.single('image'),eventController.updateEvent)
-
+router.post('/deleteEvent',eventController.deleteEvent);
+router.post('/getEventByUser',eventController.getEventByUser);
+router.post('/InterestEvent',eventController.InterestEvent);
+router.post('/participateEvent',eventController.participateEvent);
 
 module.exports = router;
